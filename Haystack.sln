@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Haystack", "Haystack\Haystack.csproj", "{3B1F592F-6566-4545-8E70-C22A68D6F683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{74854C8D-F0AB-40FC-98D5-F32FC2D6BC51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B1F592F-6566-4545-8E70-C22A68D6F683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B1F592F-6566-4545-8E70-C22A68D6F683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B1F592F-6566-4545-8E70-C22A68D6F683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B1F592F-6566-4545-8E70-C22A68D6F683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74854C8D-F0AB-40FC-98D5-F32FC2D6BC51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74854C8D-F0AB-40FC-98D5-F32FC2D6BC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74854C8D-F0AB-40FC-98D5-F32FC2D6BC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74854C8D-F0AB-40FC-98D5-F32FC2D6BC51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EEA100EB-7766-41E1-8980-451869982723}
+	EndGlobalSection
+EndGlobal
