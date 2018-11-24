@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -52,6 +53,62 @@ namespace Haystack
             return new Guid(hashedBytes);
         }
 
+        /// <summary>
+        /// A string comparison method safe from timing attacks
+        /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public static bool ConstantTimeEquals(this string control, string comparison, Encoding encoding)
+        {
+            if (control == null && comparison != null || control != null && comparison == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(control, comparison))
+            {
+                return true;
+            }
+
+            if (control.Length != comparison.Length)
+            {
+                return false;
+            }
+
+            using (var hasher = MD5.Create())
+            {
+                var leftBytes = hasher.ComputeHash(encoding.GetBytes(control));
+                var rightBytes = hasher.ComputeHash(encoding.GetBytes(comparison));
+
+                // This is the traditional bitwise XOR implementation:
+                // var result = 0;
+                // for (var i = 0; i < lhs.Length; i++)
+                // {
+                //     result |= lhs[i] ^ rhs[i];
+                // }
+                //
+                // return result == 0;
+            
+                // This more readable implementation has the same performance as the traditional implementation, even with optimizations and inlining
+                // turned off.
+                var same = true;
+                for (var i = 0; i < control.Length; i++)
+                {
+                    if (control[i] != comparison[i])
+                    {
+                        same = false;
+                    }
+                }
+            
+                return same;
+            }
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="ConstantTimeEquals(string,string,System.Text.Encoding)"/> using UTF-8 encoding
+        /// </summary>
+        public static bool ConstantTimeEquals(this string control, string comparison)
+            => ConstantTimeEquals(control, comparison, Encoding.UTF8);
+        
         /// <summary>
         /// Detects the encoding for UTF-7, UTF-8/16/32 (BOM, no BOM, big and little endian), and local default codepage, and potentially other codepages.
         /// </summary>
