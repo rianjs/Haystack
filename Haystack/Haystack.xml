@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Haystack</name>
+    </assembly>
+    <members>
+        <member name="M:Haystack.StringExtensions.TrimEnd(System.String,System.String,System.StringComparison)">
+            <summary>
+            Removes the specified string from the trailing end of the input string, if there's a match
+            </summary>
+            <param name="input"></param>
+            <param name="suffixToRemove"></param>
+            <param name="comparisonType"></param>
+            <returns>The string with the specified suffix trimmed</returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.TrimEnd(System.String,System.String)">
+            <summary>
+            <inheritdoc cref="M:Haystack.StringExtensions.TrimEnd(System.String,System.String,System.StringComparison)"/> using StringComparison.CurrentCulture
+            </summary>
+            <param name="input"></param>
+            <param name="suffixToRemove"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.TrimStart(System.String,System.String,System.StringComparison)">
+            <summary>
+            Removes the specified string from the beginning of the input string, if there's a match
+            </summary>
+            <param name="input"></param>
+            <param name="prefixToRemove"></param>
+            <param name="comparisonType"></param>
+            <returns>The string with the specified prefix trimmed</returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.TrimStart(System.String,System.String)">
+            <summary>
+            <inheritdoc cref="M:Haystack.StringExtensions.TrimStart(System.String,System.String,System.StringComparison)"/> using StringComparison.CurrentCulture
+            </summary>
+            <param name="input"></param>
+            <param name="prefixToRemove"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.Trim(System.String,System.String,System.StringComparison)">
+            <summary>
+            Removes the specified string from both the beginning and end of the input string, if there's a match
+            </summary>
+            <param name="input"></param>
+            <param name="prefixAndSuffixPrefixToRemove"></param>
+            <param name="comparisonType"></param>
+            <returns>The string with the specified string removed from both ends</returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.Trim(System.String,System.String)">
+            <summary>
+            <inheritdoc cref="M:Haystack.StringExtensions.TrimEnd(System.String,System.String,System.StringComparison)"/> using StringComparison.CurrentCulture
+            </summary>
+            <param name="input"></param>
+            <param name="prefixAndSuffixToRemove"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.Contains(System.String,System.String,System.StringComparison)">
+            <summary>
+            A search implementation that returns true if the input contains the search string as a substring using the specified comparison.
+            </summary>
+            <param name="haystack"></param>
+            <param name="needle"></param>
+            <param name="comparisonType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.ToStableGuid(System.String)">
+             <summary>
+             Hashes a string, and returns the first 16 bytes as a GUID which can be used where GUIDs and/or UNIQUEIDENTIFIERS are required.
+            
+             This is not a type 1-4 UUID in the technical sense. It merely creates stable bytes that will fit into a 128-bit UUID data structure, which can be
+             useful in circumstances where you need stable, opaque identifiers that were once user-specified data.
+             </summary>
+             <param name="str"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.ConstantTimeEquals(System.String,System.String,System.Text.Encoding)">
+            <summary>
+            A string comparison method safe from timing attacks
+            </summary>
+            <param name="str"></param>
+            <param name="comparison"></param>
+            <param name="encoding"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.ConstantTimeEquals(System.String,System.String)">
+            <summary>
+            <inheritdoc cref="M:Haystack.StringExtensions.ConstantTimeEquals(System.String,System.String,System.Text.Encoding)"/> using UTF-8 encoding
+            </summary>
+            <param name="str"></param>
+            <param name="comparison"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Haystack.StringExtensions.DetectEncoding(System.Byte[],System.Int32)">
+            <summary>
+            Detects the encoding for UTF-7, UTF-8/16/32 (BOM, no BOM, big and little endian), and local default codepage, and potentially other codepages.
+            </summary>
+            <param name="asBytes">The bytes to taste and convert to string</param>
+            <param name="tasteDepth">If UTF-8 is expected, use a large value, because characters that occur outside the ASCII range may not occur until late
+            in the string</param>
+            <returns>The Encoding and string associated with the byte array</returns>
+            <exception cref="T:System.ArgumentException">In the event that an encoding cannot be discovered</exception>
+        </member>
+    </members>
+</doc>

@@ -27,6 +27,15 @@ namespace Haystack
         }
 
         /// <summary>
+        /// <inheritdoc cref="TrimEnd(string,string,System.StringComparison)"/> using StringComparison.CurrentCulture
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="suffixToRemove"></param>
+        /// <returns></returns>
+        public static string TrimEnd(this string input, string suffixToRemove)
+            => TrimEnd(input, suffixToRemove, StringComparison.Ordinal);
+        
+        /// <summary>
         /// Removes the specified string from the beginning of the input string, if there's a match
         /// </summary>
         /// <param name="input"></param>
@@ -46,14 +55,32 @@ namespace Haystack
         }
 
         /// <summary>
+        /// <inheritdoc cref="TrimStart(string,string,System.StringComparison)"/> using StringComparison.CurrentCulture
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="prefixToRemove"></param>
+        /// <returns></returns>
+        public static string TrimStart(this string input, string prefixToRemove)
+            => TrimEnd(input, prefixToRemove, StringComparison.Ordinal);
+
+        /// <summary>
         /// Removes the specified string from both the beginning and end of the input string, if there's a match
         /// </summary>
         /// <param name="input"></param>
         /// <param name="prefixAndSuffixPrefixToRemove"></param>
         /// <param name="comparisonType"></param>
         /// <returns>The string with the specified string removed from both ends</returns>
-        public static string Trim(this string input, string prefixAndSuffixPrefixToRemove, StringComparison comparisonType) =>
-            input.TrimStart(prefixAndSuffixPrefixToRemove, comparisonType).TrimEnd(prefixAndSuffixPrefixToRemove, comparisonType);
+        public static string Trim(this string input, string prefixAndSuffixPrefixToRemove, StringComparison comparisonType)
+            => input.TrimStart(prefixAndSuffixPrefixToRemove, comparisonType).TrimEnd(prefixAndSuffixPrefixToRemove, comparisonType);
+
+        /// <summary>
+        /// <inheritdoc cref="TrimEnd(string,string,System.StringComparison)"/> using StringComparison.CurrentCulture
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="prefixAndSuffixToRemove"></param>
+        /// <returns></returns>
+        public static string Trim(this string input, string prefixAndSuffixToRemove)
+            => Trim(input, prefixAndSuffixToRemove, StringComparison.Ordinal);
 
         /// <summary>
         /// A search implementation that returns true if the input contains the search string as a substring using the specified comparison.
@@ -76,8 +103,15 @@ namespace Haystack
         public static Guid ToStableGuid(this string str)
         {
             var asBytes = Encoding.UTF8.GetBytes(str);
-            var hashedBytes = SHA1.Create().ComputeHash(asBytes).Take(16).ToArray();
-            return new Guid(hashedBytes);
+
+            using (var hasher = SHA1.Create())
+            {
+                var hashedBytes = hasher.ComputeHash(asBytes)
+                    .Take(16)
+                    .ToArray();
+
+                return new Guid(hashedBytes);
+            }
         }
 
         /// <summary>

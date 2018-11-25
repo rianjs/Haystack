@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Haystack</id>
+        <version>0.0.1</version>
+        <title>Haystack: missing extension methods for the Base Class Library</title>
+        <authors>Rian Stockbower</authors>
+        <owners>Rian Stockbower</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A grab-bag of unit-tested, performance-tested extension methods for BCL types.</description>
+        <projectUrl>https://github.com/rianjs/Haystack</projectUrl>
+        <licenseUrl>https://github.com/rianjs/Haystack/blob/master/LICENSE</licenseUrl>
+        <releaseNotes>https://github.com/rianjs/Haystack/blob/master/release-notes.md</releaseNotes>
+        <dependencies>
+            <dependency id="System.ValueTuple" version="4.4.0" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Haystack\bin\Release\Haystack.xml" target="lib\Haystack.xml" />
+
+        <file src="Haystack\bin\Release\netstandard1.3\Haystack.dll" target="lib\netstandard1.3\Haystack.dll" />
+        <file src="Haystack\bin\Release\netstandard1.3\Haystack.pdb" target="lib\netstandard1.3\Haystack.pdb" />
+        <file src="Haystack\bin\Release\netstandard1.3\Haystack.xml" target="lib\netstandard1.3\Haystack.xml" />
+        <file src="Haystack\bin\Release\netstandard1.3\Haystack.deps.json" target="lib\netstandard1.3\Haystack.deps.json" />
+    </files>
+</package>

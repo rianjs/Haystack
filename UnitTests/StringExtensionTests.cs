@@ -11,7 +11,76 @@ namespace UnitTests
         private static readonly string _lower = _someString.ToLowerInvariant();
         private static readonly string _upper = _someString.ToUpperInvariant();
         private static readonly string _copy = string.Copy(_someString);
+
+        [Test, TestCaseSource(nameof(TrimStartTestCases))]
+        public string TrimStartTests(string trim)
+            => _someString.TrimStart(trim);
+
+        public static IEnumerable<ITestCaseData> TrimStartTestCases()
+        {
+            yield return new TestCaseData("Hello world")
+                .SetName("Hello world trimmed off the front")
+                .Returns("Hello worldHello worldHello worldHello worldHello worldHello worldHello worldHello world");
+            
+            yield return new TestCaseData("Foo")
+                .SetName("Foo trimmed from the front does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(null)
+                .SetName("Null trimmed from the front does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(string.Empty)
+                .SetName("Empty string trimmed from the front does nothing")
+                .Returns(_someString);
+        }
+
+        [Test, TestCaseSource(nameof(TrimEndTestCases))]
+        public string TrimEndTests(string trim)
+            => _someString.TrimEnd(trim);
+
+        public static IEnumerable<ITestCaseData> TrimEndTestCases()
+        {
+            yield return new TestCaseData("Hello world")
+                .SetName("Hello world trimmed off the end")
+                .Returns("Hello worldHello worldHello worldHello worldHello worldHello worldHello worldHello world");
+            
+            yield return new TestCaseData("Foo")
+                .SetName("Foo trimmed from the end does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(null)
+                .SetName("Null trimmed from the end does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(string.Empty)
+                .SetName("Empty string trimmed from the end does nothing")
+                .Returns(_someString);
+        }
+
+        [Test, TestCaseSource(nameof(TrimTestCases))]
+        public string TrimTests(string trim)
+            => _someString.Trim(trim);
         
+        public static IEnumerable<ITestCaseData> TrimTestCases()
+        {
+            yield return new TestCaseData("Hello world")
+                .SetName("Hello world trimmed off both ends")
+                .Returns("Hello worldHello worldHello worldHello worldHello worldHello worldHello world");
+            
+            yield return new TestCaseData("Foo")
+                .SetName("Foo trimmed from both ends does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(null)
+                .SetName("Null trimmed from both ends does nothing")
+                .Returns(_someString);
+            
+            yield return new TestCaseData(string.Empty)
+                .SetName("Empty string trimmed from both ends does nothing")
+                .Returns(_someString);
+        }
+
         [Test, TestCaseSource(nameof(ConstantTimeEqualsTestCases))]
         public bool ConstantTimeEqualsTests(string lhs, string rhs)
             => StringExtensions.ConstantTimeEquals(lhs, rhs);
