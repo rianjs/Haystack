@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,6 +7,13 @@ namespace Haystack
 {
     public static class StringExtensions
     {
+        /// <summary>
+        /// Removes the specified string from the trailing end of the input string, if there's a match
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="suffixToRemove"></param>
+        /// <param name="comparisonType"></param>
+        /// <returns>The string with the specified suffix trimmed</returns>
         public static string TrimEnd(this string input, string suffixToRemove, StringComparison comparisonType)
         {
             if (suffixToRemove == null)
@@ -20,6 +26,13 @@ namespace Haystack
                 : input;
         }
 
+        /// <summary>
+        /// Removes the specified string from the beginning of the input string, if there's a match
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="prefixToRemove"></param>
+        /// <param name="comparisonType"></param>
+        /// <returns>The string with the specified prefix trimmed</returns>
         public static string TrimStart(this string input, string prefixToRemove, StringComparison comparisonType)
         {
             if (prefixToRemove == null)
@@ -32,11 +45,25 @@ namespace Haystack
                 : input;
         }
 
+        /// <summary>
+        /// Removes the specified string from both the beginning and end of the input string, if there's a match
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="prefixAndSuffixPrefixToRemove"></param>
+        /// <param name="comparisonType"></param>
+        /// <returns>The string with the specified string removed from both ends</returns>
         public static string Trim(this string input, string prefixAndSuffixPrefixToRemove, StringComparison comparisonType) =>
             input.TrimStart(prefixAndSuffixPrefixToRemove, comparisonType).TrimEnd(prefixAndSuffixPrefixToRemove, comparisonType);
 
-        public static bool Contains(this string haystack, string needle, StringComparison comp)
-            => haystack.IndexOf(needle, comp) >= 0;
+        /// <summary>
+        /// A search implementation that returns true if the input contains the search string as a substring using the specified comparison.
+        /// </summary>
+        /// <param name="haystack"></param>
+        /// <param name="needle"></param>
+        /// <param name="comparisonType"></param>
+        /// <returns></returns>
+        public static bool Contains(this string haystack, string needle, StringComparison comparisonType)
+            => haystack.IndexOf(needle, comparisonType) >= 0;
 
         /// <summary>
         /// Hashes a string, and returns the first 16 bytes as a GUID which can be used where GUIDs and/or UNIQUEIDENTIFIERS are required.
@@ -56,58 +83,51 @@ namespace Haystack
         /// <summary>
         /// A string comparison method safe from timing attacks
         /// </summary>
-        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static bool ConstantTimeEquals(this string control, string comparison, Encoding encoding)
+        /// <param name="str"></param>
+        /// <param name="comparison"></param>
+        /// <param name="encoding"></param>
+        /// <returns></returns>
+        public static bool ConstantTimeEquals(this string str, string comparison, Encoding encoding)
         {
-            if (control == null && comparison != null || control != null && comparison == null)
+            if (str == null && comparison != null || str != null && comparison == null)
             {
                 return false;
             }
 
-            if (ReferenceEquals(control, comparison))
+            if (ReferenceEquals(str, comparison))
             {
                 return true;
             }
 
-            if (control.Length != comparison.Length)
+            if (str.Length != comparison.Length)
             {
                 return false;
             }
 
             using (var hasher = MD5.Create())
             {
-                var leftBytes = hasher.ComputeHash(encoding.GetBytes(control));
+                var leftBytes = hasher.ComputeHash(encoding.GetBytes(str));
                 var rightBytes = hasher.ComputeHash(encoding.GetBytes(comparison));
 
-                // This is the traditional bitwise XOR implementation:
-                // var result = 0;
-                // for (var i = 0; i < lhs.Length; i++)
-                // {
-                //     result |= lhs[i] ^ rhs[i];
-                // }
-                //
-                // return result == 0;
-            
-                // This more readable implementation has the same performance as the traditional implementation, even with optimizations and inlining
-                // turned off.
-                var same = true;
-                for (var i = 0; i < control.Length; i++)
+                // This traditional XOR version is about 30ns faster than a naive `if`-based implementation
+                var result = 0;
+                for (var i = 0; i < str.Length; i++)
                 {
-                    if (control[i] != comparison[i])
-                    {
-                        same = false;
-                    }
+                    result |= str[i] ^ comparison[i];
                 }
-            
-                return same;
+                
+                return result == 0;
             }
         }
 
         /// <summary>
         /// <inheritdoc cref="ConstantTimeEquals(string,string,System.Text.Encoding)"/> using UTF-8 encoding
         /// </summary>
-        public static bool ConstantTimeEquals(this string control, string comparison)
-            => ConstantTimeEquals(control, comparison, Encoding.UTF8);
+        /// <param name="str"></param>
+        /// <param name="comparison"></param>
+        /// <returns></returns>
+        public static bool ConstantTimeEquals(this string str, string comparison)
+            => ConstantTimeEquals(str, comparison, Encoding.UTF8);
         
         /// <summary>
         /// Detects the encoding for UTF-7, UTF-8/16/32 (BOM, no BOM, big and little endian), and local default codepage, and potentially other codepages.
