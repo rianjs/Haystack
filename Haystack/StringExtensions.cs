@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Haystack
 {
@@ -383,5 +384,15 @@ namespace Haystack
             // This option is not available in a cross-platform world.
             throw new ArgumentException("Could not determine the encoding for input string");
         }
+
+        // <summary>
+        /// Taken from StackOverflow: https://stackoverflow.com/q/6309379
+        ///
+        /// Substantially faster (1251 ns) than wrapping with a try-catch and using `Convert` (20,281 ns)
+        /// </summary>
+        public static bool IsBase64(this string haystack)
+            => (haystack.Length % 4 == 0) && _base64Regex.IsMatch(haystack);
+
+        private static readonly Regex _base64Regex = new Regex(@"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.Compiled);
     }
 }

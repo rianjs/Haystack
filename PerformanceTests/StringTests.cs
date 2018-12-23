@@ -29,5 +29,25 @@ namespace PerformanceTests
         [Benchmark]
         public bool StringNotEqualsControl()
             => string.Equals(_lower, _upper, StringComparison.Ordinal);
+
+        private static string _base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_someString));
+
+        [Benchmark]
+        public bool StringIsBase64WithConvert()
+        {
+            try
+            {
+                var _ = Convert.FromBase64String(_someString);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        [Benchmark]
+        public bool StringIsBase64Regex()
+            => _base64.IsBase64();
     }
 }
