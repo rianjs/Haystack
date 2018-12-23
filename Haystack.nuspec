@@ -9,7 +9,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A grab-bag of unit-tested, performance-tested extension methods for BCL types.</description>
         <projectUrl>https://github.com/rianjs/Haystack</projectUrl>
-        <licenseUrl>https://github.com/rianjs/Haystack/blob/master/LICENSE</licenseUrl>
+        <license type="expression">MIT</license>
         <releaseNotes>https://github.com/rianjs/Haystack/blob/master/release-notes.md</releaseNotes>
         <dependencies>
             <dependency id="System.ValueTuple" version="4.4.0" />
