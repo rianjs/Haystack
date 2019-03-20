@@ -4,8 +4,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Haystack
+namespace Haystack.String
 {
+    /// <summary>
+    /// Extensions for System.String
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>

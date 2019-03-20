@@ -1,9 +1,9 @@
 using System;
 using System.Text;
 using BenchmarkDotNet.Attributes;
-using Haystack;
+using Haystack.String;
 
-namespace PerformanceTests
+namespace PerformanceTests.String
 {
     public class StringTests
     {

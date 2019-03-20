@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Haystack;
+using Haystack.String;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
