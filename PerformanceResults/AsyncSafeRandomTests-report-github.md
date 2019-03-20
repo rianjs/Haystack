@@ -7,12 +7,19 @@ Intel Core i7-8850H CPU 2.60GHz (Coffee Lake), 1 CPU, 12 logical and 6 physical 
 
 
 ```
-|                Method |        Mean |      Error |     StdDev |
-|---------------------- |------------:|-----------:|-----------:|
-|             NextAsync |    88.77 ns |  1.0290 ns |  0.9625 ns |
-|          NextMaxAsync |    86.88 ns |  1.4005 ns |  1.2415 ns |
-|       NextMinMaxAsync |    89.94 ns |  1.6393 ns |  1.5334 ns |
-|       NextDoubleAsync |    82.01 ns |  0.4481 ns |  0.3499 ns |
-| NextDoubleMinMaxAsync |    85.16 ns |  1.3849 ns |  1.2277 ns |
-|    NextDoubleMaxAsync |    88.40 ns |  1.8503 ns |  2.5939 ns |
-|             NextBytes | 1,951.49 ns | 39.8898 ns | 47.4860 ns |
+|                Method |      Mean |     Error |    StdDev |
+|---------------------- |----------:|----------:|----------:|
+|             NextAsync |  86.54 ns | 1.3553 ns | 1.2678 ns |
+|                  Next |  43.13 ns | 0.0887 ns | 0.0830 ns |
+|          NextMaxAsync |  85.98 ns | 0.3077 ns | 0.2878 ns |
+|               NextMax |  45.18 ns | 0.1513 ns | 0.1415 ns |
+|       NextMinMaxAsync |  89.85 ns | 0.3707 ns | 0.3286 ns |
+|            NextMinMax |  45.74 ns | 0.0922 ns | 0.0770 ns |
+|       NextDoubleAsync |  83.81 ns | 0.4385 ns | 0.4102 ns |
+|            NextDouble |  45.31 ns | 0.0878 ns | 0.0779 ns |
+| NextDoubleMinMaxAsync |  85.09 ns | 0.7812 ns | 0.7307 ns |
+|      NextDoubleMinMax |  44.57 ns | 0.0949 ns | 0.0888 ns |
+|    NextDoubleMaxAsync |  85.12 ns | 0.4435 ns | 0.3932 ns |
+|         NextDoubleMax |  44.35 ns | 0.0761 ns | 0.0712 ns |
+|        NextBytesAsync | 185.04 ns | 1.0035 ns | 0.9387 ns |
+|             NextBytes | 152.87 ns | 1.8456 ns | 1.6361 ns |

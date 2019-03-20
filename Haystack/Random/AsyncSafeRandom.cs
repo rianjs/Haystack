@@ -40,12 +40,39 @@ namespace Haystack.Random
             }
         }
 
+        public int Next()
+        {
+            try
+            {
+                _semaphore.Wait();
+                return _random.Next();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
         /// <inheritdoc />
         public async Task<int> NextAsync(int maxValue)
         {
             try
             {
                 await _semaphore.WaitAsync();
+                return _random.Next(maxValue);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
+        public int Next(int maxValue)
+        {
+            try
+            {
+                _semaphore.Wait();
                 return _random.Next(maxValue);
             }
             finally
@@ -69,6 +96,20 @@ namespace Haystack.Random
         }
 
         /// <inheritdoc />
+        public int Next(int minValue, int maxValue)
+        {
+            try
+            {
+                _semaphore.Wait();
+                return _random.Next(minValue, maxValue);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
         public async Task<double> NextDoubleAsync()
         {
             try
@@ -83,11 +124,39 @@ namespace Haystack.Random
         }
 
         /// <inheritdoc />
+        public double NextDouble()
+        {
+            try
+            {
+                _semaphore.Wait();
+                return _random.NextDouble();
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
         public async Task<double> NextDoubleAsync(double minValue, double maxValue)
         {
             try
             {
                 await _semaphore.WaitAsync();
+                return _random.NextDouble(minValue, maxValue);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
+        public double NextDouble(double minValue, double maxValue)
+        {
+            try
+            {
+                _semaphore.Wait();
                 return _random.NextDouble(minValue, maxValue);
             }
             finally
@@ -111,11 +180,39 @@ namespace Haystack.Random
         }
 
         /// <inheritdoc />
+        public double NextDouble(double maxValue)
+        {
+            try
+            {
+                _semaphore.Wait();
+                return _random.NextDouble(maxValue);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
         public async Task NextBytesAsync(byte[] buffer)
         {
             try
             {
                 await _semaphore.WaitAsync();
+                _random.NextBytes(buffer);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        /// <inheritdoc />
+        public void NextBytes(byte[] buffer)
+        {
+            try
+            {
+                _semaphore.Wait();
                 _random.NextBytes(buffer);
             }
             finally
