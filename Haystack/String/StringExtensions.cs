@@ -397,5 +397,63 @@ namespace Haystack.String
             => (haystack.Length % 4 == 0) && _base64Regex.IsMatch(haystack);
 
         private static readonly Regex _base64Regex = new Regex(@"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Returns true if the entire contents of the string is an ASCII digit (0 1 2 3 4 6 7 8 9)
+        /// </summary>
+        public static bool IsAsciiDigits(this string haystack)
+        {
+            if (string.IsNullOrEmpty(haystack))
+            {
+                return false;
+            }
+
+            // Compiled regex is slower, LINQ is slower, direct access by index is slower than the foreach(!).
+            foreach (var needle in haystack)
+            {
+                if (needle < '0' || needle > '9')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Breaks a string into chunks using the specified separator
+        /// </summary>
+        /// <param name="toBeChunked"></param>
+        /// <param name="separator"></param>
+        /// <param name="chunkSize"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static string Chunk(this string toBeChunked, string separator, int chunkSize)
+        {
+            if (chunkSize < 1)
+            {
+                throw new ArgumentException("Chunk sizes must be greater than zero");
+            }
+
+            var numberOfChunks = (toBeChunked.Length / chunkSize) + 1;
+            var builderCapacity = toBeChunked.Length + (numberOfChunks * separator.Length) + separator.Length;
+
+            var builder = new StringBuilder(builderCapacity);
+            for (var i = 0; i < toBeChunked.Length; i += chunkSize)
+            {
+                var remainingChars = toBeChunked.Length - i;
+                var sliceSize = Math.Min(chunkSize, remainingChars);
+                var section = toBeChunked.Substring(i, sliceSize);
+                builder.Append(section);
+
+                // This is faster than doing an unconditional truncate outside the loop
+                if (remainingChars > sliceSize)
+                {
+                    builder.Append(separator);
+                }
+            }
+
+            return builder.ToString();
+        }
     }
 }
