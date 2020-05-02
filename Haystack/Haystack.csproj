@@ -11,6 +11,18 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\Haystack.xml</DocumentationFile>
+    <PackageVersion>1.0.4</PackageVersion>
+    <PackageId>Haystack</PackageId>
+    <Title>Haystack: missing extension methods for the Base Class Library</Title>
+    <Authors>Rian Stockbower</Authors>
+    <!-- <requireLicenseAcceptance>false</requireLicenseAcceptance> -->
+    <PackageDescription>A grab-bag of unit-tested, performance-tested extensions to BCL types.</PackageDescription>
+    <RepositoryUrl>https://github.com/rianjs/Haystack</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>https://github.com/rianjs/Haystack/blob/master/release-notes.md</PackageReleaseNotes>
+        <!-- <dependencies>
+            <dependency id="System.ValueTuple" version="4.4.0" />
+        </dependencies> -->
   </PropertyGroup>
 
   <ItemGroup>
