@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Haystack</id>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <title>Haystack: missing extension methods for the Base Class Library</title>
         <authors>Rian Stockbower</authors>
         <owners>Rian Stockbower</owners>

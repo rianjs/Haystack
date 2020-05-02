@@ -3,6 +3,7 @@
 A listing of what each [Nuget package](https://www.nuget.org/packages/Haystack) version represents.
 
 ### v1
+* 1.0.4 - (20202-05-02) Add `EnumerableExtensions` with an `IsNullOrEmpty()` method on `System.Collections.IEnumerable` which is the base type for `IEnumerable<T>`.
 * 1.0.3 - (2019-04-03) Add `ToSecureString()` extension method on `System.String`.
 * 1.0.2 - (2019-03-20)
   * Move existing types to namespaces that more closely mirror the BCL
