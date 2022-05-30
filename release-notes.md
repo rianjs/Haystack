@@ -2,6 +2,10 @@
 
 A listing of what each [Nuget package](https://www.nuget.org/packages/Haystack) version represents.
 
+### v2
+* 2.0.0 - (2022-05-30) Add `CollectionHelpers` and `DictionaryHelpers` to add commutative hashing and equality. CollectionHelpers has order-dependent equality imlemented as well, if that's something you need.
+  * Upgrade to `net6.0` since it's an LTS version.
+
 ### v1
 * 1.1.1 - (2020-06-06) Add extensions to `System.IO.Compression` to make it easier to compress and decompress byte arrays. Supports `DEFLATE` and `gzip`, and `async` variants as well.
   * `CompressGzip`, `DecompressGzip`, `CompressGzipAsync`, and `DecompressGzipAsync`

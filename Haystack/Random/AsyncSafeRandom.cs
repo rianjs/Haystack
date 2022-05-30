@@ -1,224 +1,223 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Haystack.Random
+namespace Haystack.Random;
+
+using System;
+
+/// <inheritdoc />
+public class AsyncSafeRandom
+    : IAsyncSafeRandom
 {
-    using System;
+    private readonly SemaphoreSlim _semaphore;
+    private readonly Random _random;
 
     /// <inheritdoc />
-    public class AsyncSafeRandom
-        : IAsyncSafeRandom
+    public AsyncSafeRandom(int seed)
     {
-        private readonly SemaphoreSlim _semaphore;
-        private readonly Random _random;
+        _semaphore = new SemaphoreSlim(1, 1);
+        _random = new Random(seed);
+    }
 
-        /// <inheritdoc />
-        public AsyncSafeRandom(int seed)
+    /// <inheritdoc />
+    public AsyncSafeRandom()
+    {
+        _semaphore = new SemaphoreSlim(1, 1);
+        _random = new Random();
+    }
+
+    /// <inheritdoc />
+    public async Task<int> NextAsync()
+    {
+        try
         {
-            _semaphore = new SemaphoreSlim(1, 1);
-            _random = new Random(seed);
+            await _semaphore.WaitAsync();
+            return _random.Next();
         }
-
-        /// <inheritdoc />
-        public AsyncSafeRandom()
+        finally
         {
-            _semaphore = new SemaphoreSlim(1, 1);
-            _random = new Random();
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<int> NextAsync()
+    public int Next()
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.Next();
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Wait();
+            return _random.Next();
         }
-
-        public int Next()
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.Next();
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<int> NextAsync(int maxValue)
+    /// <inheritdoc />
+    public async Task<int> NextAsync(int maxValue)
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.Next(maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            await _semaphore.WaitAsync();
+            return _random.Next(maxValue);
         }
-
-        /// <inheritdoc />
-        public int Next(int maxValue)
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.Next(maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<int> NextAsync(int minValue, int maxValue)
+    /// <inheritdoc />
+    public int Next(int maxValue)
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.Next(minValue, maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Wait();
+            return _random.Next(maxValue);
         }
-
-        /// <inheritdoc />
-        public int Next(int minValue, int maxValue)
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.Next(minValue, maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<double> NextDoubleAsync()
+    /// <inheritdoc />
+    public async Task<int> NextAsync(int minValue, int maxValue)
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.NextDouble(); ;
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            await _semaphore.WaitAsync();
+            return _random.Next(minValue, maxValue);
         }
-
-        /// <inheritdoc />
-        public double NextDouble()
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.NextDouble();
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<double> NextDoubleAsync(double minValue, double maxValue)
+    /// <inheritdoc />
+    public int Next(int minValue, int maxValue)
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.NextDouble(minValue, maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Wait();
+            return _random.Next(minValue, maxValue);
         }
-
-        /// <inheritdoc />
-        public double NextDouble(double minValue, double maxValue)
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.NextDouble(minValue, maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task<double> NextDoubleAsync(double maxValue)
+    /// <inheritdoc />
+    public async Task<double> NextDoubleAsync()
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                return _random.NextDouble(maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            await _semaphore.WaitAsync();
+            return _random.NextDouble(); ;
         }
-
-        /// <inheritdoc />
-        public double NextDouble(double maxValue)
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                return _random.NextDouble(maxValue);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
         }
+    }
 
-        /// <inheritdoc />
-        public async Task NextBytesAsync(byte[] buffer)
+    /// <inheritdoc />
+    public double NextDouble()
+    {
+        try
         {
-            try
-            {
-                await _semaphore.WaitAsync();
-                _random.NextBytes(buffer);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Wait();
+            return _random.NextDouble();
         }
-
-        /// <inheritdoc />
-        public void NextBytes(byte[] buffer)
+        finally
         {
-            try
-            {
-                _semaphore.Wait();
-                _random.NextBytes(buffer);
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<double> NextDoubleAsync(double minValue, double maxValue)
+    {
+        try
+        {
+            await _semaphore.WaitAsync();
+            return _random.NextDouble(minValue, maxValue);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public double NextDouble(double minValue, double maxValue)
+    {
+        try
+        {
+            _semaphore.Wait();
+            return _random.NextDouble(minValue, maxValue);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task<double> NextDoubleAsync(double maxValue)
+    {
+        try
+        {
+            await _semaphore.WaitAsync();
+            return _random.NextDouble(maxValue);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public double NextDouble(double maxValue)
+    {
+        try
+        {
+            _semaphore.Wait();
+            return _random.NextDouble(maxValue);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public async Task NextBytesAsync(byte[] buffer)
+    {
+        try
+        {
+            await _semaphore.WaitAsync();
+            _random.NextBytes(buffer);
+        }
+        finally
+        {
+            _semaphore.Release();
+        }
+    }
+
+    /// <inheritdoc />
+    public void NextBytes(byte[] buffer)
+    {
+        try
+        {
+            _semaphore.Wait();
+            _random.NextBytes(buffer);
+        }
+        finally
+        {
+            _semaphore.Release();
         }
     }
 }

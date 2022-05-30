@@ -1,20 +1,19 @@
 ﻿using System.Security;
 
-namespace Haystack.Security
+namespace Haystack.Security;
+
+public static class SecureStringExtensions
 {
-    public static class SecureStringExtensions
+    public static SecureString ToSecureString(this string input)
     {
-        public static SecureString ToSecureString(this string input)
+        var secureString = new SecureString();
+        var passwordCharacters = input.ToCharArray();
+
+        foreach (var character in passwordCharacters)
         {
-            var secureString = new SecureString();
-            var passwordCharacters = input.ToCharArray();
-
-            foreach (var character in passwordCharacters)
-            {
-                secureString.AppendChar(character);
-            }
-
-            return secureString;
+            secureString.AppendChar(character);
         }
+
+        return secureString;
     }
 }
