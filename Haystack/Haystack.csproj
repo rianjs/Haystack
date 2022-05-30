@@ -12,7 +12,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\Haystack.xml</DocumentationFile>
-    <PackageVersion>1.1.1</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <PackageId>Haystack</PackageId>
     <Title>Haystack: missing extension methods for the Base Class Library</Title>
     <Authors>Rian Stockbower</Authors>

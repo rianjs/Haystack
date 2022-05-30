@@ -17,8 +17,8 @@ public static class EnumerableExtensions
         {
             return true;
         }
-            
-        foreach (var element in e)
+
+        foreach (var _ in e)
         {
             return false;
         }
