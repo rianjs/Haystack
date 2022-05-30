@@ -2,7 +2,7 @@
 using System.Text;
 using Haystack.IO;
 
-namespace Tester
+namespace Console
 {
     class Program
     {

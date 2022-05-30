@@ -15,54 +15,53 @@ namespace PerformanceTests.String
         private static readonly string _copy = new string(_someString);
         private static readonly byte[] _lcBytes = Encoding.UTF8.GetBytes(_lower);
         private static readonly byte[] _ssBytes = Encoding.UTF8.GetBytes(_someString);
-        
-//        [Benchmark]
-//        public bool ConstantTimeComparisonEqual()
-//            => StringExtensions.ConstantTimeEquals(_someString, _copy);
-//
-//        [Benchmark]
-//        public bool ConstantTimeComparisonNotEqual()
-//            => StringExtensions.ConstantTimeEquals(_lower, _upper);
-//
-//        [Benchmark]
-//        public bool StringEqualsControl()
-//            => string.Equals(_someString, _copy, StringComparison.Ordinal);
-//
-//        [Benchmark]
-//        public bool StringNotEqualsControl()
-//            => string.Equals(_lower, _upper, StringComparison.Ordinal);
-//
-//        private static string _base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_someString));
-//
-//        [Benchmark]
-//        public bool StringIsBase64WithConvert()
-//        {
-//            try
-//            {
-//                var _ = Convert.FromBase64String(_someString);
-//                return true;
-//            }
-//            catch (Exception e)
-//            {
-//                return false;
-//            }
-//        }
-//
-//        [Benchmark]
-//        public bool StringIsBase64Regex()
-//            => _base64.IsBase64();
+
+        [Benchmark]
+        public bool ConstantTimeComparisonEqual()
+            => StringExtensions.ConstantTimeEquals(_someString, _copy);
+
+        [Benchmark]
+        public bool ConstantTimeComparisonNotEqual()
+            => StringExtensions.ConstantTimeEquals(_lower, _upper);
+
+        [Benchmark]
+        public bool StringEqualsControl()
+            => string.Equals(_someString, _copy, StringComparison.Ordinal);
+
+        [Benchmark]
+        public bool StringNotEqualsControl()
+            => string.Equals(_lower, _upper, StringComparison.Ordinal);
+
+        private static string _base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(_someString));
+
+        [Benchmark]
+        public bool StringIsBase64WithConvert()
+        {
+            try
+            {
+                var _ = Convert.FromBase64String(_someString);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        [Benchmark]
+        public bool StringIsBase64Regex()
+            => _base64.IsBase64();
 
         private const string _longNumberString = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
         private const string _shortNumberString = "1234567890123456789012345678901234567890";
-//        private static readonly Regex _asciiDigitRegex = new Regex("(^[0-9]+$)", RegexOptions.Compiled);
+        private static readonly Regex _asciiDigitRegex = new Regex("(^[0-9]+$)", RegexOptions.Compiled);
 
-//        [Benchmark]
-//        public bool IsAsciiDigitsOnlyRegex()
-//        {
-//            // Mean: 6,211.1 ns
-//            return _asciiDigitRegex.IsMatch(_shortNumberString) && _asciiDigitRegex.IsMatch(_longNumberString);
-//        }
-
+        [Benchmark]
+        public bool IsAsciiDigitsOnlyRegex()
+        {
+            // Mean: 6,211.1 ns
+            return _asciiDigitRegex.IsMatch(_shortNumberString) && _asciiDigitRegex.IsMatch(_longNumberString);
+        }
 
         [Benchmark]
         public bool IsAsciiDigitsOnlyForeachIteration()
